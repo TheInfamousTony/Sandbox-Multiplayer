@@ -13,7 +13,6 @@ public class Bubble : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ground") || collision.collider.CompareTag("Entities") || collision.collider.CompareTag("Blocks") || collision.collider.CompareTag("ExplosiveBarrels") || collision.collider.CompareTag("Paper"))
         {
-            PhotonNetwork.Destroy(gameObject);
             StartCoroutine(BreakParticle());
         }
     }
@@ -23,5 +22,6 @@ public class Bubble : MonoBehaviour
         GameObject destroyEffect = PhotonNetwork.Instantiate(bubbleBreak.name, transform.position, transform.rotation);
         yield return new WaitForSeconds(1f);
         PhotonNetwork.Destroy(destroyEffect);
+        PhotonNetwork.Destroy(gameObject);
     }
 }

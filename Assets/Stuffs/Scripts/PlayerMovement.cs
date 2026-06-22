@@ -76,9 +76,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (isGrounded)
-            rb.drag = groundDrag;
+            rb.linearDamping = groundDrag;
         else
-            rb.drag = 0;
+            rb.linearDamping = 0;
 
         cam.stopLook = stopLook;
         cam.initSenX = sensitivity;
@@ -207,19 +207,19 @@ public class PlayerMovement : MonoBehaviour
 
     void SpeedControl()
     {
-        Vector3 flatvel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        Vector3 flatvel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
         if (flatvel.magnitude > speed)
         {
             Vector3 limitedVel = flatvel.normalized * speed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
         }
     }
 
     IEnumerator Jump()
     {
         yield return new WaitForSeconds(0.15f);
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.y);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.y);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
